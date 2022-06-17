@@ -1,0 +1,24 @@
+name: "gowebcli"
+mode: "dev"
+port: 8080
+version: "v0.1.5"
+log:
+  level: "debug"
+  filename: "log/cli.log"
+  max_size: 200
+  max_age: 30
+  max_backups: 7
+mysql:
+  host: "localhost"
+  port: 3306
+  user: "root"
+  password: "142857"
+  dbname: "mysql_test"
+  max_open_conns: 200
+  max_idle_conns: 50
+redis:
+  host: "47.97.213.122"
+  port: 6379
+  password: "142857"
+  db: 0
+  pool_size: 100
