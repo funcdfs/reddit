@@ -2,7 +2,7 @@ package redis
 
 import (
 	"fmt"
-	"gowebcli/settings"
+	"reddit/settings"
 
 	"github.com/go-redis/redis"
 )

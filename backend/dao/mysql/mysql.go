@@ -2,9 +2,8 @@ package mysql
 
 import (
 	"fmt"
-	"gowebcli/settings"
-
 	"go.uber.org/zap"
+	"reddit/settings"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"

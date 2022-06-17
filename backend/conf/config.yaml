@@ -2,6 +2,8 @@ name: "gowebcli"
 mode: "dev"
 port: 8080
 version: "v0.1.5"
+start_time: "2002-01-20"
+machine_id: 1
 log:
   level: "debug"
   filename: "log/cli.log"
@@ -13,7 +15,7 @@ mysql:
   port: 3306
   user: "root"
   password: "142857"
-  dbname: "mysql_test"
+  db_name: "reddit"
   max_open_conns: 200
   max_idle_conns: 50
 redis:

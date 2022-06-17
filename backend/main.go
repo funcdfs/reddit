@@ -3,15 +3,16 @@ package main
 import (
 	"context"
 	"fmt"
-	"gowebcli/dao/mysql"
-	"gowebcli/dao/redis"
-	"gowebcli/logger"
-	"gowebcli/routes"
-	"gowebcli/settings"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"reddit/dao/mysql"
+	"reddit/dao/redis"
+	"reddit/logger"
+	"reddit/pkg/snowflake"
+	"reddit/router"
+	"reddit/settings"
 	"syscall"
 	"time"
 
@@ -51,8 +52,20 @@ func main() {
 	}
 	defer redis.Close()
 
+	// 添加 snowflake
+	if err := snowflake.Init(settings.Conf.MachineID); err != nil {
+		fmt.Printf("init snowflake failed, err:%v\n", err)
+		return
+	}
+
+	// // 初始化 gin 框架内置的校验器使用的翻译器
+	// if err := controller.InitTrans("zh"); err != nil {
+	// 	fmt.Printf("init trans failed, err:%v\n", err)
+	// 	return
+	// }
+
 	// 5. 注册路由
-	r := routes.Setup(settings.Conf.Mode)
+	r := router.Setup(settings.Conf.Mode)
 
 	// 6. 启动服务（优雅关机）
 	fmt.Println(settings.Conf.Port)

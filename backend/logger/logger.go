@@ -1,11 +1,11 @@
 package logger
 
 import (
-	"gowebcli/settings"
 	"net"
 	"net/http"
 	"net/http/httputil"
 	"os"
+	"reddit/settings"
 	"runtime/debug"
 	"strings"
 	"time"
