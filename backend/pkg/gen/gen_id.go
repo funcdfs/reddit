@@ -1,40 +1,43 @@
 package gen
 
 import (
-	"fmt"
-	"time"
-
-	"github.com/sony/sonyflake"
+	"github.com/bwmarrin/snowflake"
+	"go.uber.org/zap"
+	"strconv"
 )
 
-var (
-	sonyFlake     *sonyflake.Sonyflake
-	sonyMachineID uint16
-)
+var snowflakeNode *snowflake.Node
 
-func getMachineID() (uint16, error) {
-	return sonyMachineID, nil
-}
-
-// Init 需传入当前的机器ID
-func Init(machineId uint16) (err error) {
-	sonyMachineID = machineId
-	t, _ := time.Parse("2006-01-02", "2020-01-01")
-	settings := sonyflake.Settings{
-		StartTime: t,
-		MachineID: getMachineID,
+func Init() error {
+	n, err := snowflake.NewNode(1)
+	if err != nil {
+		return err
 	}
-	sonyFlake = sonyflake.NewSonyflake(settings)
-	return
+	snowflakeNode = n
+	return nil
 }
 
-// GenID 返回生成的id值
-func GenID() (id uint64, err error) {
-	if sonyFlake == nil {
-		err = fmt.Errorf("snoy flake not inited")
-		return
-	}
-
-	id, err = sonyFlake.NextID()
-	return
+func NewID() (id int64) {
+	id = int64(snowflakeNode.Generate())
+	zap.L().Info(strconv.Itoa(int(id)))
+	return id
 }
+
+// func main() {
+// 	n, err := snowflake.NewNode(1)
+// 	if err != nil {
+// 		println(err)
+// 		os.Exit(1)
+// 	}
+//
+// 	for i := 0; i < 3; i++ {
+// 		id := n.Generate()
+// 		fmt.Println("id", id)
+// 		fmt.Println(
+// 			"node: ", id.Node(),
+// 			"step: ", id.Step(),
+// 			"time: ", id.Time(),
+// 			"\n",
+// 		)
+// 	}
+// }

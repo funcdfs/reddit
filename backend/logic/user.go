@@ -5,6 +5,7 @@ import (
 	"reddit/dao/mysql"
 	"reddit/models"
 	"reddit/pkg/gen"
+	"reddit/pkg/jwt"
 )
 
 func SignUp(p *models.ParamSignUp) (err error) {
@@ -14,13 +15,13 @@ func SignUp(p *models.ParamSignUp) (err error) {
 		return err // 数据库查询出错
 	}
 	// 生成 uid
-	userID, err := gen.GenID()
+	userID := gen.NewID()
 	if err != nil {
 		return errors.New("id generation failed")
 	}
 	// 构造一个 user 实例
 	u := models.User{
-		UserID:   int8(userID),
+		UserID:   userID,
 		UserName: p.UserName,
 		Password: p.Password,
 	}
@@ -29,15 +30,16 @@ func SignUp(p *models.ParamSignUp) (err error) {
 	return mysql.InsertUser(&u)
 }
 
-func Login(p *models.ParamLogin) (err error) {
+func Login(p *models.ParamLogin) (token string, err error) {
 	user := &models.User{
 		UserName: p.UserName,
 		Password: p.Password,
 	}
 
 	if err := mysql.Login(user); err != nil {
-		return errors.New("login failed: " + err.Error())
+		return "error token", errors.New("login failed: " + err.Error())
 	}
-
-	return nil
+	// zap.L().Info("login successful!!!!!!")
+	// generate jwt token
+	return jwt.GenToken(user.UserID, user.UserName)
 }

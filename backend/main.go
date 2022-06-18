@@ -53,7 +53,7 @@ func main() {
 	defer redis.Close()
 
 	// 添加 gen
-	if err := gen.Init(1); err != nil {
+	if err := gen.Init(); err != nil {
 		fmt.Printf("init gen id failed, err:%v\n", err)
 		return
 	}

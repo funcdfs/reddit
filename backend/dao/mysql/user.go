@@ -6,13 +6,13 @@ import (
 	"encoding/hex"
 	"errors"
 	"reddit/models"
-	"reddit/pkg/gen"
 )
 
 var (
-	ErrorUserExists   = errors.New("user already exists")
-	ErrorUserNotExist = errors.New("user does not exist")
-	ErrorPassword     = errors.New("password error")
+	ErrorUserExists   = errors.New("user already exists: ")
+	ErrorUserNotExist = errors.New("user does not exist: ")
+	ErrorPassword     = errors.New("password error: ")
+	ErrorInsertFailed = errors.New("insert failed: ")
 )
 
 const secretKey = "https://github.com/fengwei2002"
@@ -38,17 +38,16 @@ func CheckUserExists(username string) error {
 
 // InsertUser 向数据库中插入一个新的用户记录
 func InsertUser(user *models.User) (err error) {
-
-	// TODO: solve user_id conflict
-
 	// 对密码进行加密
 	user.Password = encryptPassword(user.Password)
 	// 执行 sql 语句入库
-	t, _ := gen.GenID()
-	user.UserID = int8(t)
 	sqlStr := `insert into user(user_id, user_name, password) values(?, ?, ?)`
 	_, err = db.Exec(sqlStr, user.UserID, user.UserName, user.Password)
-	return errors.New("insertUser failed" + err.Error())
+	if err != nil {
+		return errors.New(err.Error())
+		// return ErrorInsertFailed
+	}
+	return nil
 }
 
 func Login(user *models.User) (err error) {

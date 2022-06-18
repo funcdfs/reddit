@@ -32,7 +32,7 @@ func ResponseError(c *gin.Context, code ResCode) {
 func ResponseErrorWithMessage(c *gin.Context, code ResCode, msg string) {
 	c.JSON(http.StatusOK, &ResponseData{
 		Code: code,
-		Msg:  code.Msg() + msg,
+		Msg:  code.Msg() + " " + msg,
 		Data: nil,
 	})
 }
