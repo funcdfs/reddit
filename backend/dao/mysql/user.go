@@ -9,6 +9,12 @@ import (
 	"reddit/pkg/gen"
 )
 
+var (
+	ErrorUserExists   = errors.New("user already exists")
+	ErrorUserNotExist = errors.New("user does not exist")
+	ErrorPassword     = errors.New("password error")
+)
+
 const secretKey = "https://github.com/fengwei2002"
 
 func encryptPassword(originPassword string) string {
@@ -18,13 +24,16 @@ func encryptPassword(originPassword string) string {
 }
 
 // CheckUserExists checks if the user exists in the database
-func CheckUserExists(username string) (bool, error) {
+func CheckUserExists(username string) error {
 	sqlStr := `select count(user_id) from user where user_name = ?`
 	var count int
 	if err := db.Get(&count, sqlStr, username); err != nil {
-		return false, err
+		return err
 	}
-	return count > 0, nil
+	if count > 0 {
+		return ErrorUserExists
+	}
+	return nil
 }
 
 // InsertUser 向数据库中插入一个新的用户记录
@@ -47,7 +56,7 @@ func Login(user *models.User) (err error) {
 	sqlStr := `select user_id, user_name, password from user where user_name=?`
 	err = db.Get(user, sqlStr, user.UserName)
 	if err == sql.ErrNoRows {
-		return errors.New("user not found")
+		return ErrorUserNotExist
 	}
 	if err != nil {
 		return errors.New("query sql error" + err.Error())
@@ -55,7 +64,7 @@ func Login(user *models.User) (err error) {
 	// 判断密码正确
 	password := encryptPassword(originPassword)
 	if password != user.Password {
-		return errors.New("password is incorrect")
+		return ErrorPassword
 	}
 	return
 }

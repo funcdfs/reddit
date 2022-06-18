@@ -9,12 +9,9 @@ import (
 
 func SignUp(p *models.ParamSignUp) (err error) {
 	// 判断用户存不存在
-	exists, err := mysql.CheckUserExists(p.UserName)
+	err = mysql.CheckUserExists(p.UserName)
 	if err != nil {
 		return err // 数据库查询出错
-	}
-	if exists {
-		return errors.New("user already exists")
 	}
 	// 生成 uid
 	userID, err := gen.GenID()
