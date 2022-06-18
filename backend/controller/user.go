@@ -13,7 +13,7 @@ func SignUpHandler(c *gin.Context) {
 	var p models.ParamSignUp
 	if err := c.ShouldBindJSON(&p); err != nil {
 		// 请求参数存在错误
-		zap.L().Error("ShouldBindJSON failed: ", zap.Error(err))
+		zap.L().Error("signup ShouldBindJSON failed: ", zap.Error(err))
 		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		return
 	}
@@ -31,4 +31,23 @@ func SignUpHandler(c *gin.Context) {
 	}
 	// 返回响应
 	c.JSON(http.StatusOK, "ok")
+}
+
+func LoginHandler(c *gin.Context) {
+	// 获取请求参数和参数校验
+	p := new(models.ParamLogin)
+	if err := c.ShouldBindJSON(&p); err != nil {
+		// 请求参数存在错误
+		zap.L().Error("login ShouldBindJSON failed: ", zap.Error(err))
+		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+		return
+	}
+	// 业务逻辑处理
+	if err := logic.Login(p); err != nil {
+		zap.L().Error("logic.Login failed", zap.Error(err))
+		c.JSON(http.StatusOK, gin.H{"error": "username or password incorrect"})
+		return
+	}
+	// 返回响应
+	c.JSON(http.StatusOK, gin.H{"success": "login successful"})
 }

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"reddit/dao/mysql"
 	"reddit/models"
-	"reddit/pkg/snowflake"
+	"reddit/pkg/gen"
 )
 
 func SignUp(p *models.ParamSignUp) (err error) {
@@ -17,7 +17,7 @@ func SignUp(p *models.ParamSignUp) (err error) {
 		return errors.New("user already exists")
 	}
 	// 生成 uid
-	userID, err := snowflake.GenID()
+	userID, err := gen.GenID()
 	if err != nil {
 		return errors.New("id generation failed")
 	}
@@ -30,4 +30,17 @@ func SignUp(p *models.ParamSignUp) (err error) {
 
 	// 保存进 数据库
 	return mysql.InsertUser(&u)
+}
+
+func Login(p *models.ParamLogin) (err error) {
+	user := &models.User{
+		UserName: p.UserName,
+		Password: p.Password,
+	}
+
+	if err := mysql.Login(user); err != nil {
+		return errors.New("login failed: " + err.Error())
+	}
+
+	return nil
 }

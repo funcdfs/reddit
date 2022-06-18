@@ -10,7 +10,7 @@ import (
 	"reddit/dao/mysql"
 	"reddit/dao/redis"
 	"reddit/logger"
-	"reddit/pkg/snowflake"
+	"reddit/pkg/gen"
 	"reddit/router"
 	"reddit/settings"
 	"syscall"
@@ -52,9 +52,9 @@ func main() {
 	}
 	defer redis.Close()
 
-	// 添加 snowflake
-	if err := snowflake.Init(settings.Conf.MachineID); err != nil {
-		fmt.Printf("init snowflake failed, err:%v\n", err)
+	// 添加 gen
+	if err := gen.Init(1); err != nil {
+		fmt.Printf("init gen id failed, err:%v\n", err)
 		return
 	}
 
