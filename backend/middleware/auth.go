@@ -7,8 +7,6 @@ import (
 	"strings"
 )
 
-const ContextUserId = "userID"
-
 func JWTAuthMiddleware() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		// 客户端携带 Token 有三种方式 1：放在请求头，2：放在请求体，3：放在 URI
@@ -39,7 +37,7 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 		}
 
 		// 将当前请求的 userID 信息保存到请求的上下文 c 上面
-		c.Set(ContextUserId, mc.UserID)
+		c.Set(controller.ContextUserId, mc.UserID)
 		c.Next() // 后续的处理函数可以用过 c.Get(ContextUserId) 来获取当前请求的用户信息
 
 		// 得到 userID 就可以查询所有的数据了

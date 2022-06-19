@@ -27,8 +27,8 @@ func main() {
 		fmt.Printf("init settings failed, err:%v\n", err)
 		return
 	}
-	fmt.Println(settings.Conf)
-	fmt.Println(settings.Conf.LogConfig == nil)
+	// fmt.Println(settings.Conf)
+	// fmt.Println(settings.Conf.LogConfig == nil)
 
 	// 2. 初始化日志
 	if err := logger.Init(settings.Conf.LogConfig, "dev"); err != nil {
@@ -36,7 +36,7 @@ func main() {
 		return
 	}
 	defer zap.L().Sync()
-	zap.L().Debug("logger init success...")
+	zap.L().Debug("\nlogger init success...")
 
 	// 3. 初始化MySQL连接
 	if err := mysql.Init(settings.Conf.MySQLConfig); err != nil {

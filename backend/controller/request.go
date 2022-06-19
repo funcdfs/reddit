@@ -3,7 +3,6 @@ package controller
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
-	middlewares "reddit/middleware"
 )
 
 var (
@@ -11,9 +10,11 @@ var (
 	ErrorUserTokenToInt64 = errors.New("ErrorUserTokenToInt64")
 )
 
+const ContextUserId = "userID"
+
 // GetCurrentUserID 返回 userID
 func GetCurrentUserID(c *gin.Context) (userID int64, err error) {
-	uid, ok := c.Get(middlewares.ContextUserId)
+	uid, ok := c.Get(ContextUserId)
 	if !ok {
 		err = ErrorUserNotLogin
 		return
