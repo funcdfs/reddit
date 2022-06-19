@@ -1,10 +1,14 @@
 <template>
     <nav
         class="navbar navbar-expand-lg navbar-light"
-        style="background-color: #e3f2fd"
+        style="background-color: #e8faf2"
     >
         <div class="container">
-            <a class="navbar-brand" href="#">Home</a>
+            <div class="nav-item">
+                <router-link class="nav-link" :to="{ name: 'homeview' }"
+                    >homeview</router-link
+                >
+            </div>
             <button
                 class="navbar-toggler"
                 type="button"
@@ -50,13 +54,25 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Friends</a>
+                        <router-link
+                            class="nav-link"
+                            :to="{ name: 'userlist', params: {} }"
+                            >userlist</router-link
+                        >
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Chat</a>
+                        <router-link
+                            class="nav-link"
+                            :to="{ name: 'userprofile' }"
+                            >userprofile</router-link
+                        >
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Space</a>
+                        <router-link
+                            class="nav-link"
+                            :to="{ name: 'userspace' }"
+                            >userspace</router-link
+                        >
                     </li>
                     <li class="nav-item">
                         <form class="d-flex" role="search">
@@ -87,17 +103,25 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="#">Sign In</a>
+                                <a class="dropdown-item" href="/userlogin"
+                                    >userlogin</a
+                                >
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Sign Up</a>
+                                <a class="dropdown-item" href="/userregister"
+                                    >userregister</a
+                                >
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Sign Out</a>
+                                <a class="dropdown-item" href="/userlogout"
+                                    >userlogout</a
+                                >
                             </li>
                             <li><hr class="dropdown-divider" /></li>
                             <li>
-                                <a class="dropdown-item" href="#">Settings</a>
+                                <a class="dropdown-item" href="/usersettings"
+                                    >usersettings</a
+                                >
                             </li>
                         </ul>
                     </div>

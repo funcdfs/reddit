@@ -1,14 +1,23 @@
 <template>
     <div class="home">
-        <img alt="Vue logo" src="../assets/logo.png" />
+        <BasicContent> home page </BasicContent>
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import BasicContent from "../components/BasicContent";
 
 export default {
     name: "HomeView",
-    components: {},
+    components: {
+        BasicContent,
+    },
 };
 </script>
+
+<style scoped>
+.container {
+    margin-top: 20px;
+}
+</style>
