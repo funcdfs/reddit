@@ -2,15 +2,17 @@ package controller
 
 import (
 	"errors"
-	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 	"reddit/dao/mysql"
 	"reddit/logic"
 	"reddit/models"
+
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 func SignUpHandler(c *gin.Context) {
 	// 参数校验:
+
 	var p models.ParamSignUp
 	if err := c.ShouldBindJSON(&p); err != nil {
 		// 请求参数存在错误，记录日志，同时返回到前端
