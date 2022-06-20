@@ -2,7 +2,7 @@
     <BasicContent>
         <div class="row justify-content-md-center">
             <div class="col-3">
-                <form @submit="login">
+                <form @submit.prevent="login">
                     <div class="mb-3">
                         <label for="username" class="form-label"
                             >username</label
