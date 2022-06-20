@@ -70,7 +70,7 @@
                     <li class="nav-item">
                         <router-link
                             class="nav-link"
-                            :to="{ name: 'userspace' }"
+                            :to="{ name: 'userspace', params: { userId: 1 } }"
                             >userspace</router-link
                         >
                     </li>

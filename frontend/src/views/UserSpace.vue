@@ -22,6 +22,7 @@ import UserInfo from "@/components/UserInfo";
 import UserPosts from "@/components/UserPosts";
 import { reactive } from "vue";
 import UserPostWrite from "@/components/UserPostWrite";
+import { useRoute } from "vue-router"; // 使用自定义参数
 
 export default {
     name: "UserSpace",
@@ -33,6 +34,9 @@ export default {
     },
 
     setup() {
+        const route = useRoute();
+        console.log(route.params.userId); // 取出 url 中得对应参数的 value
+
         const user = reactive({
             userid: 1,
             username: "admin",
