@@ -4,6 +4,10 @@ port: 8081
 version: "v0.1.5"
 start_time: "2002-01-20"
 machine_id: 1
+
+auth:
+  jwt_expire: 8760
+
 log:
   level: "debug"
   filename: "log/cli.log"
