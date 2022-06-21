@@ -12,14 +12,14 @@ var (
 
 const ContextUserId = "userID"
 
-// GetCurrentUserID 返回 userID
-func GetCurrentUserID(c *gin.Context) (userID int64, err error) {
+// GetCurrentUserId return userId int64 from contextUserId
+func GetCurrentUserId(c *gin.Context) (userId int64, err error) {
 	uid, ok := c.Get(ContextUserId)
 	if !ok {
 		err = ErrorUserNotLogin
 		return
 	}
-	userID, ok = uid.(int64)
+	userId, ok = uid.(int64)
 	if !ok {
 		err = ErrorUserTokenToInt64
 		return

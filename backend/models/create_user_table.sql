@@ -1,3 +1,4 @@
+# create user table
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -14,6 +15,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+# create community table
 DROP TABLE IF EXISTS `community`;
 CREATE TABLE `community` (
                              `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -32,6 +34,7 @@ INSERT INTO `community` VALUES ('3', '3', 'timi', '欢迎来到王者荣耀', '2
 INSERT INTO `community` VALUES ('4', '4', '皇室战争', '3分钟一局的痛快战斗!', '2016-01-01 08:00:00', '2016-01-01 08:00:00');
 
 
+# create post table
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE `post` (
                         `id` bigint(20) NOT NULL AUTO_INCREMENT,

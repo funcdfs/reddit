@@ -16,34 +16,31 @@ data: 存放数据
 */
 
 type ResponseData struct {
-	Code    MyCode      `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data,omitempty"` // omitempty当data为空时,不展示这个字段
+	Code ResCode
+	Msg  any
+	Data any
 }
 
-func ResponseError(ctx *gin.Context, c MyCode) {
-	rd := &ResponseData{
-		Code:    c,
-		Message: c.Msg(),
-		Data:    nil,
-	}
-	ctx.JSON(http.StatusOK, rd)
+func ResponseError(c *gin.Context, code ResCode) {
+	c.JSON(http.StatusOK, &ResponseData{
+		Code: code,
+		Msg:  code.Msg(),
+		Data: nil,
+	})
 }
 
-func ResponseErrorWithMsg(ctx *gin.Context, code MyCode, data interface{}) {
-	rd := &ResponseData{
-		Code:    code,
-		Message: code.Msg(),
-		Data:    data,
-	}
-	ctx.JSON(http.StatusOK, rd)
+func ResponseErrorWithMessage(c *gin.Context, code ResCode, msg string) {
+	c.JSON(http.StatusOK, &ResponseData{
+		Code: code,
+		Msg:  code.Msg() + " " + msg,
+		Data: nil,
+	})
 }
 
-func ResponseSuccess(ctx *gin.Context, data interface{}) {
-	rd := &ResponseData{
-		Code:    CodeSuccess,
-		Message: CodeSuccess.Msg(),
-		Data:    data,
-	}
-	ctx.JSON(http.StatusOK, rd)
+func ResponseSuccess(c *gin.Context, data any) {
+	c.JSON(http.StatusOK, &ResponseData{
+		Code: CodeSuccess,
+		Msg:  CodeSuccess.Msg(),
+		Data: data,
+	})
 }

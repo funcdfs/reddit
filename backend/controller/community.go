@@ -6,12 +6,13 @@ import (
 	"reddit/logic"
 )
 
+// CommunityHandler implements the Handler interface for the Community router
+// Response the community list to fronted
 func CommunityHandler(c *gin.Context) {
-	// 查询到所有的社区 (community_id, community_name) 以列表的形式返回
 	data, err := logic.GetCommunityList()
 	if err != nil {
 		zap.L().Error("logic.GetCommunityList() failed: ", zap.Error(err))
-		ResponseError(c, CodeServerBusy) // 不把服务端报错返回给前端
+		ResponseError(c, CodeServerBusy) // don't return the server error to the frontend
 		return
 	}
 

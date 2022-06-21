@@ -10,18 +10,17 @@ import (
 	"go.uber.org/zap"
 )
 
+// SignUpHandler implements sign up route handler
+// check the parameters is valid
+// use logic.SignUp to sign up the user
+// if the user sign up successfully then return success to the frontend
 func SignUpHandler(c *gin.Context) {
-	// 参数校验:
-
 	var p models.ParamSignUp
 	if err := c.ShouldBindJSON(&p); err != nil {
-		// 请求参数存在错误，记录日志，同时返回到前端
 		zap.L().Error("signup ShouldBindJSON failed: ", zap.Error(err))
 		ResponseError(c, CodeInvalidParameter)
 		return
 	}
-
-	// 业务处理
 	if err := logic.SignUp(&p); err != nil {
 		zap.L().Error("logic.SignUp failed: ", zap.Error(err))
 		if errors.Is(err, mysql.ErrorUserExists) {
@@ -31,20 +30,20 @@ func SignUpHandler(c *gin.Context) {
 		ResponseErrorWithMessage(c, CodeServerBusy, err.Error())
 		return
 	}
-	// 返回响应
 	ResponseSuccess(c, "sign_up successfully")
 }
 
+// LoginHandler implements login router handler
+// check the parameters is valid
+// use logic.Login to sign in the user that parameters specified
+// is successfully sign in, then return the jwt token to frontend
 func LoginHandler(c *gin.Context) {
-	// 获取请求参数和参数校验
 	p := new(models.ParamLogin)
 	if err := c.ShouldBindJSON(&p); err != nil {
-		// 请求参数存在错误
 		zap.L().Error("login ShouldBindJSON failed: ", zap.Error(err))
 		ResponseError(c, CodeInvalidParameter)
 		return
 	}
-	// 业务逻辑处理
 	token, err := logic.Login(p)
 	if err != nil {
 		zap.L().Error("LoginHandler execute failed: ", zap.Error(err))
@@ -55,6 +54,5 @@ func LoginHandler(c *gin.Context) {
 		ResponseErrorWithMessage(c, CodeServerBusy, "controller.Login failed: "+err.Error())
 		return
 	}
-	// 返回响应
 	ResponseSuccess(c, token)
 }
