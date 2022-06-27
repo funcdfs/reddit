@@ -1,9 +1,10 @@
 package gen
 
 import (
+	"strconv"
+
 	"github.com/bwmarrin/snowflake"
 	"go.uber.org/zap"
-	"strconv"
 )
 
 var snowflakeNode *snowflake.Node

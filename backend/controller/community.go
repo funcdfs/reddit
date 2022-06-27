@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+
 	"reddit/logic"
 )
 
@@ -16,5 +17,5 @@ func CommunityHandler(c *gin.Context) {
 		return
 	}
 
-	ResponseSuccess(c, data)
+	ResponseSuccessWithData(c, data)
 }

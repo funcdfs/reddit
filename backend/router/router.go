@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"reddit/controller"
 	"reddit/logger"
-	middlewares "reddit/middleware"
 )
 
 func Setup(mode string) *gin.Engine {
@@ -23,17 +22,17 @@ func Setup(mode string) *gin.Engine {
 	v1.POST("/login", controller.LoginHandler)
 
 	// v1 group use jwtAuthMiddleware
-	v1.Use(middlewares.JWTAuthMiddleware())
-	{
-		v1.GET("community", controller.CommunityHandler)
-	}
+	// v1.Use(middlewares.JWTAuthMiddleware())
+	// {
+	// 	v1.GET("community", controller.CommunityHandler)
+	// }
 
-	r.GET("/ping", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
-		// if the current user is a sign in user
-		// determine whether there is a valid jwt token in the request header
-		// if jwt token is valid then send the pong
-		c.String(http.StatusOK, "pong")
-	})
+	// r.GET("/ping", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
+	// 	// if the current user is a sign in user
+	// 	// determine whether there is a valid jwt token in the request header
+	// 	// if jwt token is valid then send the pong
+	// 	c.String(http.StatusOK, "pong")
+	// })
 
 	// change noRoute to 404 page
 	r.NoRoute(func(c *gin.Context) {

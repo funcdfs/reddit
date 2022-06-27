@@ -2,12 +2,13 @@ package controller
 
 import (
 	"errors"
-	"reddit/dao/mysql"
-	"reddit/logic"
-	"reddit/models"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+
+	"reddit/dao/mysql"
+	"reddit/logic"
+	"reddit/models"
 )
 
 // SignUpHandler implements sign up route handler
@@ -30,7 +31,7 @@ func SignUpHandler(c *gin.Context) {
 		ResponseErrorWithMessage(c, CodeServerBusy, err.Error())
 		return
 	}
-	ResponseSuccess(c, "sign_up successfully")
+	ResponseSuccessWithData(c, "sign_up successfully")
 }
 
 // LoginHandler implements login router handler
@@ -44,6 +45,16 @@ func LoginHandler(c *gin.Context) {
 		ResponseError(c, CodeInvalidParameter)
 		return
 	}
+	/*
+
+		post format:
+
+		{
+			"username": "konng",
+			"password": "1"
+		}
+
+	*/
 	token, err := logic.Login(p)
 	if err != nil {
 		zap.L().Error("LoginHandler execute failed: ", zap.Error(err))
@@ -54,5 +65,5 @@ func LoginHandler(c *gin.Context) {
 		ResponseErrorWithMessage(c, CodeServerBusy, "controller.Login failed: "+err.Error())
 		return
 	}
-	ResponseSuccess(c, token)
+	ResponseSuccessWithData(c, token)
 }

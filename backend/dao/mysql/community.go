@@ -2,7 +2,9 @@ package mysql
 
 import (
 	"database/sql"
+
 	"go.uber.org/zap"
+
 	"reddit/models"
 )
 

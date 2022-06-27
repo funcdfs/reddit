@@ -1,17 +1,16 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 /*
 定义程序中的响应内容，把响应的对象封装为固定的格式
-
-code: 程序中的错误码
-msg: xx 提示信息
-data: 存放数据
-
+	code: 程序中的错误码
+	msg: xx 提示信息
+	data: 存放数据
 对于前端来说处理的过程就会很清晰 code -> message -> data
 */
 
@@ -37,7 +36,7 @@ func ResponseErrorWithMessage(c *gin.Context, code ResCode, msg string) {
 	})
 }
 
-func ResponseSuccess(c *gin.Context, data any) {
+func ResponseSuccessWithData(c *gin.Context, data any) {
 	c.JSON(http.StatusOK, &ResponseData{
 		Code: CodeSuccess,
 		Msg:  CodeSuccess.Msg(),

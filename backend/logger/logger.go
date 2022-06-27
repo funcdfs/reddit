@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"os"
-	"reddit/settings"
 	"runtime/debug"
 	"strings"
 	"time"
@@ -14,6 +13,8 @@ import (
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+
+	"reddit/settings"
 )
 
 // Init 初始化Logger

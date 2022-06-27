@@ -2,6 +2,9 @@ package logic
 
 import (
 	"errors"
+
+	"go.uber.org/zap"
+
 	"reddit/dao/mysql"
 	"reddit/models"
 	"reddit/pkg/gen"
@@ -43,7 +46,9 @@ func Login(p *models.ParamLogin) (token string, err error) {
 	if err := mysql.Login(user); err != nil {
 		return "error token", errors.New("login failed: " + err.Error())
 	}
-	// zap.L().Info("login successful!!!!!!")
-	// generate jwt token
-	return jwt.GenToken(user.UserID, user.UserName)
+	zap.L().Info("login successful!!!!!!")
+
+	// generate jwt token and return to controller
+	// return jwt.GenToken(user.UserID, user.UserName)
+	return "", nil
 }

@@ -5,7 +5,9 @@ import (
 	"database/sql"
 	"encoding/hex"
 	"errors"
+
 	"go.uber.org/zap"
+
 	"reddit/models"
 )
 
