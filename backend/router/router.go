@@ -27,7 +27,8 @@ func Setup(mode string) *gin.Engine {
 	// v1 group use jwtAuthMiddleware
 	v1.Use(middleware.JWTAuthMiddleware())
 	{
-		v1.GET("community", controller.CommunityHandler)
+		v1.GET("/community", controller.CommunityHandler)
+		v1.GET("/community/:id", controller.CommunityDetailHandler)
 	}
 
 	r.GET("/ping", middleware.JWTAuthMiddleware(), func(c *gin.Context) {

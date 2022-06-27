@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
@@ -18,4 +20,22 @@ func CommunityHandler(c *gin.Context) {
 	}
 
 	ResponseSuccessWithData(c, data)
+}
+
+// CommunityDetailHandler
+func CommunityDetailHandler(c *gin.Context) {
+	communityIdStr := c.Param("id")
+	communityId, err := strconv.ParseUint(communityIdStr, 10, 64)
+	if err != nil {
+		ResponseError(c, CodeInvalidParameter)
+		return
+	}
+
+	communityList, err := logic.GetCommunityDetailByID(communityId)
+	if err != nil {
+		zap.L().Error("logic.GetCommunityByID() failed", zap.Error(err))
+		ResponseErrorWithMessage(c, CodeSuccess, err.Error())
+		return
+	}
+	ResponseSuccessWithData(c, communityList)
 }

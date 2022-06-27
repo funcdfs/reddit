@@ -11,13 +11,6 @@ import (
 	"reddit/models"
 )
 
-var (
-	ErrorUserExists   = errors.New("user already exists: ")
-	ErrorUserNotExist = errors.New("user does not exist: ")
-	ErrorPassword     = errors.New("password error: ")
-	ErrorInsertFailed = errors.New("insert failed: ")
-)
-
 const secretKey = "https://github.com/fengwei2002"
 
 // encryptPassword encrypt a password using the provided secret key

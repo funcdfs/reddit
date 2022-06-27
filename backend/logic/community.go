@@ -10,3 +10,6 @@ func GetCommunityList() ([]*models.Community, error) {
 	// 查询数据库中所有的 community 并返回
 	return mysql.GetCommunityList()
 }
+func GetCommunityDetailByID(id uint64) (*models.CommunityDetail, error) {
+	return mysql.GetCommunityDetailByID(id)
+}
