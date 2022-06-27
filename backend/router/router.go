@@ -1,10 +1,13 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+
 	"reddit/controller"
 	"reddit/logger"
+	"reddit/middleware"
 )
 
 func Setup(mode string) *gin.Engine {
@@ -27,12 +30,12 @@ func Setup(mode string) *gin.Engine {
 	// 	v1.GET("community", controller.CommunityHandler)
 	// }
 
-	// r.GET("/ping", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
-	// 	// if the current user is a sign in user
-	// 	// determine whether there is a valid jwt token in the request header
-	// 	// if jwt token is valid then send the pong
-	// 	c.String(http.StatusOK, "pong")
-	// })
+	r.GET("/ping", middleware.JWTAuthMiddleware(), func(c *gin.Context) {
+		// if the current user is a sign in user
+		// determine whether there is a valid jwt token in the request header
+		// if jwt token is valid then send the pong
+		c.String(http.StatusOK, "pong")
+	})
 
 	// change noRoute to 404 page
 	r.NoRoute(func(c *gin.Context) {

@@ -11,7 +11,7 @@ const (
 	CodeServerBusy
 
 	CodeNeedAuth
-	CodeInvalidAuth
+	CodeInvalidToken
 	CodeNeedLogin
 )
 
@@ -23,9 +23,9 @@ var codeMsgMap = map[ResCode]any{
 	CodeInvalidPassword:  "invalid_password",
 	CodeServerBusy:       "server_busy",
 
-	CodeNeedAuth:    "need_auth",
-	CodeNeedLogin:   "need_login",
-	CodeInvalidAuth: "invalid_auth",
+	CodeNeedAuth:     "need_auth",
+	CodeNeedLogin:    "need_login",
+	CodeInvalidToken: "invalid_tokens",
 }
 
 func (c ResCode) Msg() string {

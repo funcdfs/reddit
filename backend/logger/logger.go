@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -137,4 +138,13 @@ func GinRecovery(stack bool) gin.HandlerFunc {
 		}()
 		c.Next()
 	}
+}
+
+// logger.Blue(xxx)
+
+var _default = "\x1b[0m"
+
+func Blue(text string) {
+	ans := "\x1b[34m" + text + _default
+	fmt.Println(ans)
 }

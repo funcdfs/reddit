@@ -62,8 +62,9 @@ func LoginHandler(c *gin.Context) {
 			ResponseError(c, CodeUserNotFound)
 			return
 		}
-		ResponseErrorWithMessage(c, CodeServerBusy, "controller.Login failed: "+err.Error())
+		ResponseErrorWithMessage(c, CodeServerBusy, "logic.Login failed: "+err.Error())
 		return
 	}
+	// response token to frontend
 	ResponseSuccessWithData(c, token)
 }

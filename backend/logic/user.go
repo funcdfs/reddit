@@ -3,11 +3,11 @@ package logic
 import (
 	"errors"
 
-	"go.uber.org/zap"
-
 	"reddit/dao/mysql"
+	"reddit/logger"
 	"reddit/models"
 	"reddit/pkg/gen"
+	"reddit/pkg/jwt"
 )
 
 // SignUp logic.Signup use models.ParamSignUp to call mysql.InsertUser
@@ -46,9 +46,8 @@ func Login(p *models.ParamLogin) (token string, err error) {
 	if err := mysql.Login(user); err != nil {
 		return "error token", errors.New("login failed: " + err.Error())
 	}
-	zap.L().Info("login successful!!!!!!")
-
+	logger.Blue("login successful!!!!!!")
 	// generate jwt token and return to controller
-	// return jwt.GenToken(user.UserID, user.UserName)
-	return "", nil
+	return jwt.GenToken(uint64(user.UserID), user.UserName)
+	// return "", nil
 }

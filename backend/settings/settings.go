@@ -2,6 +2,7 @@ package settings
 
 import (
 	"fmt"
+
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
@@ -66,16 +67,10 @@ func Init() (err error) {
 	}
 	viper.WatchConfig()
 	viper.OnConfigChange(func(in fsnotify.Event) {
-		fmt.Println(Blue("配置文件修改了..."))
+		fmt.Println("-------- config changed -----------")
 		if err := viper.Unmarshal(Conf); err != nil {
 			fmt.Printf("viper.Unmarshal failed, err:%v\n", err)
 		}
 	})
 	return
-}
-
-var _default = "\x1b[0m"
-
-func Blue(text string) string {
-	return "\x1b[34m" + text + _default
 }

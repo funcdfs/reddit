@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/bwmarrin/snowflake v0.3.0
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.5.4
 	github.com/gin-gonic/gin v1.8.0
 	github.com/go-redis/redis v6.15.9+incompatible
