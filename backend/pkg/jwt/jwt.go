@@ -28,7 +28,7 @@ func GenToken(userID uint64, username string) (Token string, err error) {
 		"username",
 		jwt.StandardClaims{ // jwt seven field
 			ExpiresAt: time.Now().Add(ToKenExpireDuration).Unix(), // time
-			Issuer:    "bluebell",                                 // signer
+			Issuer:    "fengwei",                                  // signer
 		},
 	}
 	Token, err = jwt.NewWithClaims(jwt.SigningMethodHS256, c).SignedString(MySecret)
