@@ -25,10 +25,10 @@ func Setup(mode string) *gin.Engine {
 	v1.POST("/login", controller.LoginHandler)
 
 	// v1 group use jwtAuthMiddleware
-	// v1.Use(middlewares.JWTAuthMiddleware())
-	// {
-	// 	v1.GET("community", controller.CommunityHandler)
-	// }
+	v1.Use(middleware.JWTAuthMiddleware())
+	{
+		v1.GET("community", controller.CommunityHandler)
+	}
 
 	r.GET("/ping", middleware.JWTAuthMiddleware(), func(c *gin.Context) {
 		// if the current user is a sign in user

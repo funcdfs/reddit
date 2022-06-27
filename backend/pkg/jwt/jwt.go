@@ -7,7 +7,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-const ToKenExpireDuration = time.Hour * 2
+const ToKenExpireDuration = time.Hour * 2000
 
 type MyClaims struct {
 	UserID   uint64 `json:"user_id"`
