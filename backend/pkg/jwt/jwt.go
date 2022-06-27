@@ -17,12 +17,12 @@ type MyClaims struct {
 
 var MySecret = []byte("github.com/fengwei2002")
 
-// GenToken generate a jwt token
+// GenTokenWithOutRefresh generate a jwt token
 // create a myclaims
 // 		to specify diy field and expiration time and signer
 // then use method to create a token object
 // then return token.SignedString as jwt token ans
-func GenToken(userID uint64, username string) (Token string, err error) {
+func GenTokenWithOutRefresh(userID uint64, username string) (Token string, err error) {
 	c := MyClaims{
 		userID,
 		"username",
@@ -34,6 +34,12 @@ func GenToken(userID uint64, username string) (Token string, err error) {
 	Token, err = jwt.NewWithClaims(jwt.SigningMethodHS256, c).SignedString(MySecret)
 	return
 }
+
+// GenToken
+// gen access token and refresh token to strong jwt method
+// func GenToken(userID uint64, username string) (aToken, rToken string, err error) {
+//
+// }
 
 // ParseToken parse a jwt token to get myclaims object and a erorr
 func ParseToken(tokenString string) (*MyClaims, error) {

@@ -48,6 +48,6 @@ func Login(p *models.ParamLogin) (token string, err error) {
 	}
 	logger.Blue("login successful!!!!!!")
 	// generate jwt token and return to controller
-	return jwt.GenToken(uint64(user.UserID), user.UserName)
+	return jwt.GenTokenWithOutRefresh(uint64(user.UserID), user.UserName)
 	// return "", nil
 }
