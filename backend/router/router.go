@@ -30,6 +30,11 @@ func Setup(mode string) *gin.Engine {
 		v1.GET("/community", controller.CommunityHandler)
 		v1.GET("/community/:id", controller.CommunityDetailHandler)
 		v1.POST("/post", controller.CreatePostHandler) // 创建帖子
+		// {
+		// 	"title": "学习 golang",
+		// 	"content": "必须学 mysql",
+		// 	"community_id": 1
+		// }
 	}
 
 	r.GET("/ping", middleware.JWTAuthMiddleware(), func(c *gin.Context) {
