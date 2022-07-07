@@ -30,6 +30,8 @@ func GetPostByID(pid int64) (post *models.Post, err error) {
 	sqlStr := `select post_id, title, content, author_id, community_id, create_time
 	from post
 	where post_id = ?`
+
+	// 查询单条数据使用 get
 	err = db.Get(post, sqlStr, pid)
 	if err == sql.ErrNoRows {
 		err = ErrorInValidID

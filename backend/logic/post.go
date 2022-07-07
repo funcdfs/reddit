@@ -38,3 +38,8 @@ func CreatePost(post *models.Post) (err error) {
 	return
 
 }
+
+// GetPostById search post detail by post id
+func GetPostById(id int64) (data *models.Post, err error) {
+	return mysql.GetPostByID(id)
+}

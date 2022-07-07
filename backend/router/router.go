@@ -35,6 +35,7 @@ func Setup(mode string) *gin.Engine {
 		// 	"content": "必须学 mysql",
 		// 	"community_id": 1
 		// }
+		v1.POST("/post/:id", controller.PostDetailHandler)
 	}
 
 	r.GET("/ping", middleware.JWTAuthMiddleware(), func(c *gin.Context) {
