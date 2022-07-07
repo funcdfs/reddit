@@ -58,3 +58,15 @@ func PostDetailHandler(c *gin.Context) {
 	// 3、返回响应
 	ResponseSuccessWithData(c, post)
 }
+
+func PostListHandler(c *gin.Context) {
+	// 获取分页参数
+	page, size := getPageInfo(c)
+	// 获取数据
+	data, err := logic.GetPostList(page, size)
+	if err != nil {
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+	ResponseSuccessWithData(c, data)
+}

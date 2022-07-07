@@ -71,5 +71,4 @@ func GetPostList(page, size int64) (posts []*models.Post, err error) {
 	posts = make([]*models.Post, 0, 2) // 0：长度  2：容量
 	err = db.Select(&posts, sqlStr, (page-1)*size, size)
 	return
-
 }

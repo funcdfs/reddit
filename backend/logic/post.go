@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"fmt"
 	"reddit/dao/mysql"
 
 	"go.uber.org/zap"
@@ -73,6 +74,41 @@ func GetPostById(id int64) (data *models.ApiPostDetail, err error) {
 		Post:            post,
 		CommunityDetail: community,
 		AuthorName:      user.UserName,
+	}
+	return
+}
+
+func GetPostList(page, size int64) (data []*models.ApiPostDetail, err error) {
+	postList, err := mysql.GetPostList(page, size)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	data = make([]*models.ApiPostDetail, 0, len(postList)) // data 初始化
+	for _, post := range postList {
+		// 根据作者id查询作者信息
+		user, err := mysql.GetUserByID(post.AuthorId)
+		if err != nil {
+			zap.L().Error("mysql.GetUserByID() failed",
+				zap.Uint64("postID", post.AuthorId),
+				zap.Error(err))
+			continue
+		}
+		// 根据社区id查询社区详细信息
+		community, err := mysql.GetCommunityByID(post.CommunityID)
+		if err != nil {
+			zap.L().Error("mysql.GetCommunityByID() failed",
+				zap.Uint64("community_id", post.CommunityID),
+				zap.Error(err))
+			continue
+		}
+		// 接口数据拼接
+		postDetail := &models.ApiPostDetail{
+			Post:            post,
+			CommunityDetail: community,
+			AuthorName:      user.UserName,
+		}
+		data = append(data, postDetail)
 	}
 	return
 }

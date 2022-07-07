@@ -36,6 +36,8 @@ func Setup(mode string) *gin.Engine {
 		// 	"community_id": 1
 		// }
 		v1.POST("/post/:id", controller.PostDetailHandler)
+		v1.GET("/posts/", controller.PostListHandler) // 分页展示帖子列表
+		// v1.GET("/posts2", controller.PostList2Handler) // 根据时间或者分数排序分页展示帖子列表
 	}
 
 	r.GET("/ping", middleware.JWTAuthMiddleware(), func(c *gin.Context) {
