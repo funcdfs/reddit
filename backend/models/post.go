@@ -11,5 +11,14 @@ type Post struct {
 	Content     string    `json:"content" db:"content" binding:"required"`
 	CreateTime  time.Time `json:"-" db:"create_time"`
 }
-// 尽量把相同结构的类型塞到一起 
 
+// 尽量把相同结构的类型塞到一起
+
+// ApiPostDetail define the specific parameters in the ApiPostDetail structures
+type ApiPostDetail struct {
+	*Post                               // 嵌入帖子结构体
+	*CommunityDetail `json:"community"` // 嵌入社区信息
+	AuthorName       string             `json:"author_name"`
+	VoteNum          int64              `json:"vote_num"`
+	// CommunityName string `json:"community_name"`
+}

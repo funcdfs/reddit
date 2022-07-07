@@ -66,3 +66,10 @@ func Login(user *models.User) (err error) {
 	}
 	return
 }
+
+func GetUserByID(id uint64) (user *models.User, err error) {
+	user = new(models.User)
+	sqlStr := `select user_id, user_name from user where user_id = ?`
+	err = db.Get(user, sqlStr, id)
+	return
+}
