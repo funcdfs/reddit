@@ -25,7 +25,7 @@ func SignUp(p *models.ParamSignUp) (err error) {
 		return errors.New("id generation failed")
 	}
 	u := models.User{
-		UserID:   userID,
+		UserID:   uint64(userID),
 		UserName: p.UserName,
 		Password: p.Password,
 	}
@@ -37,17 +37,21 @@ func SignUp(p *models.ParamSignUp) (err error) {
 // after mysql.Login is done you can get the userId int64
 // use the userId and username to generate a jwt token
 // return this token and error in GenToken process
-func Login(p *models.ParamLogin) (token string, err error) {
-	user := &models.User{
+func Login(p *models.ParamLogin) (user *models.User, err error) {
+	user = &models.User{
 		UserName: p.UserName,
 		Password: p.Password,
 	}
-
 	if err := mysql.Login(user); err != nil {
-		return "error token", errors.New("login failed: " + err.Error())
+		return user, errors.New("login failed: " + err.Error())
 	}
 	logger.Blue("login successful!!!!!!")
+
 	// generate jwt token and return to controller
-	return jwt.GenTokenWithOutRefresh(uint64(user.UserID), user.UserName)
-	// return "", nil
+	token, err := jwt.GenTokenWithOutRefresh(user.UserID, user.UserName)
+	if err != nil {
+		return user, errors.New("gen token failed: " + err.Error())
+	}
+	user.AccessToken = token
+	return
 }

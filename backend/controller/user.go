@@ -55,7 +55,7 @@ func LoginHandler(c *gin.Context) {
 		}
 
 	*/
-	token, err := logic.Login(p)
+	user, err := logic.Login(p)
 	if err != nil {
 		zap.L().Error("LoginHandler execute failed: ", zap.Error(err))
 		if errors.Is(err, mysql.ErrorUserNotExist) {
@@ -66,5 +66,9 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 	// response token to frontend
-	ResponseSuccessWithData(c, token)
+	ResponseSuccessWithData(c, gin.H{
+		"user_id":   user.UserID, // id > 2^53-1 type is int64
+		"user_name": user.UserName,
+		"token":     user.AccessToken,
+	})
 }
